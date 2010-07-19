@@ -16,7 +16,7 @@ LOCAL_CFLAGS += -DHAVE_CONFIG_H
 
 LOCAL_C_INCLUDES :=            \
    $(LOCAL_PATH)/../       \
-   $(TOPDIR)kernel/include/drm \
+   $(TOPDIR)hardware/intel/include/drm \
    $(TARGET_OUT_HEADERS)/libttm
 
 LOCAL_COPY_HEADERS_TO := libwsbm/wsbm
