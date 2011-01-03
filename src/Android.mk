@@ -32,6 +32,7 @@ LOCAL_COPY_HEADERS :=          \
    wsbm_util.h
 
 LOCAL_MODULE:= libwsbm
+LOCAL_MODULE_TAGS := optional
 
 LOCAL_SHARED_LIBRARIES:= libdrm
 
