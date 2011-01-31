@@ -34,7 +34,7 @@
 #include "config.h"
 #endif
 
-#include <ttm/ttm_placement_user.h>
+#include <psb_ttm_placement_user.h>
 #include <stdint.h>
 #include <sys/time.h>
 #include <errno.h>

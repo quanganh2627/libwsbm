@@ -42,7 +42,7 @@
 #include "assert.h"
 #include "wsbm_priv.h"
 #include "wsbm_manager.h"
-#include "ttm/ttm_placement_user.h"
+#include "psb_ttm_placement_user.h"
 
 #define DRMRESTARTCOMMANDWRITE(_fd, _val, _arg, _ret)			\
 	do {								\

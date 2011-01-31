@@ -38,7 +38,7 @@
 #include "wsbm_pool.h"
 #include "wsbm_manager.h"
 #include <xf86drm.h>
-#include <ttm/ttm_fence_user.h>
+#include <psb_ttm_fence_user.h>
 #include <string.h>
 #include <unistd.h>
 
