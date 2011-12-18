@@ -520,3 +520,56 @@ wsbmTTMPoolInit(int fd, unsigned int devOffset)
     pool->setStatus = &pool_setStatus;
     return pool;
 }
+
+struct _WsbmBufStorage *
+ttm_pool_ub_create(struct _WsbmBufferPool *pool, unsigned long size, uint32_t placement, unsigned alignment, const unsigned long *user_ptr)
+{
+    struct _TTMBuffer *dBuf = (struct _TTMBuffer *)
+	    calloc(1, sizeof(*dBuf));
+    struct _TTMPool *ttmPool = containerOf(pool, struct _TTMPool, pool);
+    int ret;
+    unsigned pageSize = ttmPool->pageSize;
+    union ttm_pl_create_ub_arg arg;
+
+    if (!dBuf)
+	    return NULL;
+
+    if ((alignment > pageSize) && (alignment % pageSize))
+	    goto out_err0;
+
+    ret = wsbmBufStorageInit(&dBuf->buf, pool);
+    if (ret)
+	    goto out_err0;
+
+    ret = WSBM_COND_INIT(&dBuf->event);
+    if (ret)
+	    goto out_err1;
+
+    arg.req.size = size;
+    arg.req.placement = placement;
+    arg.req.page_alignment = alignment / pageSize;
+    arg.req.user_address = user_ptr;
+
+    DRMRESTARTCOMMANDWRITEREAD(pool->fd, ttmPool->devOffset + TTM_PL_CREATE_UB,
+			       arg, ret);
+    if (ret)
+        goto out_err2;
+
+    dBuf->requestedSize = size;
+    dBuf->kBuf.gpuOffset = arg.rep.gpu_offset;
+    dBuf->mapHandle = arg.rep.map_handle;
+    dBuf->realSize = arg.rep.bo_size;
+    dBuf->kBuf.placement = arg.rep.placement;
+    dBuf->kBuf.handle = arg.rep.handle;
+
+    return &dBuf->buf;
+
+  out_err2:
+    WSBM_COND_FREE(&dBuf->event);
+  out_err1:
+    wsbmBufStorageTakedown(&dBuf->buf);
+  out_err0:
+    free(dBuf);
+    return NULL;
+}
+
