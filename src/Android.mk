@@ -1,7 +1,6 @@
 LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
-
 LOCAL_SRC_FILES:=          \
    wsbm_driver.c           \
    wsbm_fencemgr.c         \
@@ -13,14 +12,21 @@ LOCAL_SRC_FILES:=          \
    wsbm_userpool.c
 
 LOCAL_CFLAGS += -DHAVE_CONFIG_H
-
 LOCAL_C_INCLUDES :=            \
    $(LOCAL_PATH)/../       \
-   $(TOPDIR)hardware/intel/include/drm \
+   $(TARGET_OUT_HEADERS)/drm \
+   $(TARGET_OUT_HEADERS)/ipp \
+   $(TARGET_OUT_HEADERS)/libdrm \
+   $(TARGET_OUT_HEADERS)/libdrm/shared-core \
    $(TARGET_OUT_HEADERS)/libttm
 
-LOCAL_COPY_HEADERS_TO := libwsbm/wsbm
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE:= libwsbm
+LOCAL_SHARED_LIBRARIES:= libdrm
+include $(BUILD_SHARED_LIBRARY)
 
+include $(CLEAR_VARS)
+LOCAL_COPY_HEADERS_TO := libwsbm/wsbm
 LOCAL_COPY_HEADERS :=          \
    wsbm_atomic.h           \
    wsbm_driver.h           \
@@ -30,10 +36,4 @@ LOCAL_COPY_HEADERS :=          \
    wsbm_pool.h         \
    wsbm_priv.h         \
    wsbm_util.h
-
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE:= libwsbm
-
-LOCAL_SHARED_LIBRARIES:= libdrm
-
-include $(BUILD_SHARED_LIBRARY)
+include $(BUILD_COPY_HEADERS)
