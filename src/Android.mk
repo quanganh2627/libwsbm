@@ -1,5 +1,7 @@
 LOCAL_PATH:= $(call my-dir)
 
+ifeq ($(ENABLE_IMG_GRAPHICS),true)
+
 include $(CLEAR_VARS)
 LOCAL_SRC_FILES:=          \
    wsbm_driver.c           \
@@ -37,3 +39,5 @@ LOCAL_COPY_HEADERS :=          \
    wsbm_priv.h         \
    wsbm_util.h
 include $(BUILD_COPY_HEADERS)
+
+endif
