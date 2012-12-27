@@ -1011,6 +1011,8 @@ wsbmBOCreateList(int target, int hasKernelBuffers)
     struct _WsbmBufferList *list = calloc(sizeof(*list), 1);
     int ret;
 
+    if (!list)
+        return NULL;
     list->hasKernelBuffers = hasKernelBuffers;
     if (hasKernelBuffers) {
 	ret = validateCreateList(target, &list->kernelBuffers, 0);

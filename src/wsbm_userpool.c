@@ -339,7 +339,7 @@ pool_validate(struct _WsbmBufStorage *buf, uint64_t set_flags,
 		vBuf->node =
 		    wsbmMMGetBlock(vBuf->node, vBuf->size, vBuf->alignment);
 
-	    if (!err) {
+	    if (!err && vBuf->node) {
 		vBuf->kBuf.placement = WSBM_PL_FLAG_VRAM;
 		vBuf->kBuf.gpuOffset = p->vramOffset + vBuf->node->start;
 		vBuf->map = (void *)(p->vramMap + vBuf->node->start);
