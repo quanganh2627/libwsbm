@@ -548,7 +548,7 @@ ttm_pool_ub_create(struct _WsbmBufferPool *pool, unsigned long size, uint32_t pl
     arg.req.size = size;
     arg.req.placement = placement;
     arg.req.page_alignment = alignment / pageSize;
-    arg.req.user_address = user_ptr;
+    arg.req.user_address = (unsigned long)user_ptr;
 
     DRMRESTARTCOMMANDWRITEREAD(pool->fd, ttmPool->devOffset + TTM_PL_CREATE_UB,
 			       arg, ret);
