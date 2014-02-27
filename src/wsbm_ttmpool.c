@@ -356,7 +356,7 @@ pool_map(struct _WsbmBufStorage *buf, unsigned mode, void **virtual)
      */
 
     if (dBuf->virtual == NULL) {
-#ifndef ANDROID
+#if defined(__LP64__) || defined(_LP64) || defined(__LP64)
 	virt = mmap(0, dBuf->requestedSize,
 		    PROT_READ | PROT_WRITE, MAP_SHARED,
 		    buf->pool->fd, dBuf->mapHandle);
