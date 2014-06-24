@@ -43,6 +43,7 @@
 #include "wsbm_priv.h"
 #include "wsbm_manager.h"
 #include "psb_ttm_placement_user.h"
+#define PAGE_SHIFT	12
 
 #define DRMRESTARTCOMMANDWRITE(_fd, _val, _arg, _ret)			\
 	do {								\
